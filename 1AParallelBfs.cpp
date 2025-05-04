@@ -7,26 +7,31 @@
 using namespace std;
 
 // Graph class representing an undirected graph using adjacency list representation
-class Graph {
+class Graph
+{
 private:
-    int numVertices;          // Number of vertices
-    vector<vector<int>> adj;  // Adjacency list
+    int numVertices;         // Number of vertices
+    vector<vector<int>> adj; // Adjacency list
 
 public:
     Graph(int vertices) : numVertices(vertices), adj(vertices) {}
 
     // Add an edge between two vertices
-    void addEdge(int src, int dest) {
+    void addEdge(int src, int dest)
+    {
         adj[src].push_back(dest);
         adj[dest].push_back(src);
     }
 
     // View the graph
-    void viewGraph() {
+    void viewGraph()
+    {
         cout << "Graph:\n";
-        for (int i = 0; i < numVertices; i++) {
+        for (int i = 0; i < numVertices; i++)
+        {
             cout << "Vertex " << i << " -> ";
-            for (int neighbor : adj[i]) {
+            for (int neighbor : adj[i])
+            {
                 cout << neighbor << " ";
             }
             cout << endl;
@@ -34,7 +39,8 @@ public:
     }
 
     // Perform Breadth First Search (BFS) in parallel
-    void bfs(int startVertex) {
+    void bfs(int startVertex)
+    {
         vector<bool> visited(numVertices, false);
         queue<int> q;
 
@@ -42,25 +48,30 @@ public:
         visited[startVertex] = true;
         q.push(startVertex);
 
-        while (!q.empty()) {
+        while (!q.empty())
+        {
             int currentVertex = q.front();
             q.pop();
             cout << currentVertex << " ";
 
-            // Enqueue all adjacent unvisited vertices
-            #pragma omp parallel for
-            for (int neighbor : adj[currentVertex]) {
-                if (!visited[neighbor]) {
+// Enqueue all adjacent unvisited vertices
+#pragma omp parallel for
+            for (size_t i = 0; i < adj[currentVertex].size(); i++)
+            {
+                int neighbor = adj[currentVertex][i];
+
+                if (!visited[neighbor])
+                {
                     visited[neighbor] = true;
                     q.push(neighbor);
                 }
             }
         }
     }
-
 };
 
-int main() {
+int main()
+{
     int numVertices;
     cout << "Enter the number of vertices in the graph: ";
     cin >> numVertices;
@@ -73,7 +84,8 @@ int main() {
     cin >> numEdges;
 
     cout << "Enter the edges (source destination):\n";
-    for (int i = 0; i < numEdges; i++) {
+    for (int i = 0; i < numEdges; i++)
+    {
         int src, dest;
         cin >> src >> dest;
         graph.addEdge(src, dest);
@@ -92,8 +104,6 @@ int main() {
 
     return 0;
 }
-
-
 
 // To compile - g++ -Fopenmp 1AParallelBfs.cpp -o 1AParallelBfs.exe
 

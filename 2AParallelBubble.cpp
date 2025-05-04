@@ -58,7 +58,7 @@ int main()
 
     // "Parallel" Bubble Sort (not truly effective)
     start = clock();
-    #pragma omp parallel
+#pragma omp parallel
     {
         bubbleSort(arr, n); // still behaves like sequential
     }
