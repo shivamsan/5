@@ -125,3 +125,7 @@ int main()
 // Vertex 5 -> 4
 // Enter the starting vertex for BFS: 1
 // Breadth First Search (BFS): 1 0 3 2 4 5
+
+//%%writefile Untitled2.cpp%%writefile Untitled2.cpp
+//!g++ -fopenmp -o Untitled2 Untitled2.cpp
+//!./Untitled2
